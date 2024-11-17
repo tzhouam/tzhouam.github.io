@@ -13,4 +13,4 @@ I am very fortunate to be advised by [Prof. Demetri Terzopoulos](https://web.cs.
 
 You can find my CV here: [Taichang Zhou](../assets/Resume.pdf).
 
-[Email](mailto:tzhouam@ucla.edu) / [Github](https://github.com/tzhouam) / [Wechat](../images/wechat.jpg) 
+[Email](mailto:tzhouam@ucla.edu) / [Github](https://github.com/tzhouam) / [Wechat](../images/ZTC_wechat.png) 
