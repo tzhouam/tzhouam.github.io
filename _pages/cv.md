@@ -11,35 +11,27 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* M.S. in Computer Science, University of California - Los Angeles(UCLA), 2025(expected)
+* B.Eng. in Computer Science and Engineering, Hong Kong University of Science and Technology(HKUST), 2023
 
 Work experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * Github University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+* 2022 June - 2022 Aug: Junior AI Developer
+  * Vetrackr(Hong Kong)
+  * Duties includes:
+    · Collaborated with the team to contribute to risk management model of predicting taxi drivers’ security ranks
+    · Retrieved the weather data through Python web crawler, and collected driving data through plug-in detectors on taxis
+    · Implemented algorithms based on GPS to identify distinctive driving behaviors with over 90% accuracy.
+    · Established a deep learning system from scratch with multi-layer LSTM to predict driver risk appetite and recommended speed based on
+    weather conditions, attaining a precision over 40%
+    · Evaluated the risk prediction model with saliency analysis to ensure the reliability and robustness
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
-
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Programming Language: C/C++, Python, Java, HTML, CSS, JavaScript(JS), SQL
+* Machine Learning: Numpy, Pandas, Pytorch, CNN, Transformer, LSTM, Large Language Model(LLM), Casual Analysis
+* Other skills: Cloud Computing(HDFS,Hadoop,Spark), Recommendation System, Blockchain, Computer Network
 
 Publications
 ======
@@ -47,18 +39,4 @@ Publications
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+
