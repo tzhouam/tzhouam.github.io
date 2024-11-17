@@ -1,5 +1,5 @@
 ---
-title: "Paper Title Number 1"
+title: "Global Prefix-Tuning: Extremely Efficient Fine-Tuning for Shallow Alignment Using One Token"
 collection: publications
 category: manuscripts
 permalink: /publication/2009-10-01-paper-title-number-1
