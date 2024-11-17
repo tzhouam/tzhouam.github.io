@@ -19,12 +19,12 @@ Work experience
 * 2022 June - 2022 Aug: Junior AI Developer
   * Vetrackr(Hong Kong)
   * Duties includes:
-    · Collaborated with the team to contribute to risk management model of predicting taxi drivers’ security ranks
-    · Retrieved the weather data through Python web crawler, and collected driving data through plug-in detectors on taxis
-    · Implemented algorithms based on GPS to identify distinctive driving behaviors with over 90% accuracy.
-    · Established a deep learning system from scratch with multi-layer LSTM to predict driver risk appetite and recommended speed based on
+    * Collaborated with the team to contribute to risk management model of predicting taxi drivers’ security ranks
+    * Retrieved the weather data through Python web crawler, and collected driving data through plug-in detectors on taxis
+    * Implemented algorithms based on GPS to identify distinctive driving behaviors with over 90% accuracy.
+    * Established a deep learning system from scratch with multi-layer LSTM to predict driver risk appetite and recommended speed based on
     weather conditions, attaining a precision over 40%
-    · Evaluated the risk prediction model with saliency analysis to ensure the reliability and robustness
+    * Evaluated the risk prediction model with saliency analysis to ensure the reliability and robustness
 
   
 Skills
