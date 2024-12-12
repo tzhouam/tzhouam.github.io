@@ -2,7 +2,7 @@
 title: "Global Prefix-Tuning: Extremely Efficient Fine-Tuning for Shallow Alignment Using One Token"
 collection: publications
 category: conferences
-permalink: /publication/paper1
+permalink: /publication/paper2
 excerpt: 'We introduce Global-Token Tuner, an extremely parameter-efficient fine-tuning (PEFT) method for adapting Large Language Models (LLMs) that uses only a few or just one learnable token, regardless of model size. Global-Token Tuner employs a unique design that constructs a globally shared set of tunable tokens that modify the attention of every layer. Therefore no matter how base model change the tunable parameter remains relatively constant. We showed that our method can attain comparable performance with LoRA across plenty of common tasks while reducing parameter requirements from multiple millions or more to as few as 5 thousand. We also believe the discovery that even one token can effectively finetune LLMs illuminates the inner workings of LLMs.'
 date: 2024-06-16
 venue: 'ACL(submitted)'
