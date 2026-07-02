@@ -60,11 +60,13 @@ table.cal{border-collapse:collapse;width:100%;margin-top:6px}
   font-size:.82rem;border-radius:4px}
 .cal td.off{background:#f8fafc}
 .cal td.today{background:linear-gradient(135deg,#fef9c3,#fef3c7);outline:2px solid #f59e0b}
-.cal .todo{background:linear-gradient(135deg,#fee2e2,#fce7f3);border-left:3px solid #ef4444;
+.cal .todo{background:linear-gradient(135deg,#e0e7ff,#ede9fe);border-left:3px solid #6366f1;
   border-radius:5px;padding:2px 5px;margin-top:3px;font-size:.72rem}
+.cal .todo.due{background:linear-gradient(135deg,#fee2e2,#fce7f3);border-left-color:#ef4444}
 ul.todos{list-style:none;padding:0;margin:0}
 ul.todos li{border:1px solid #e2e8f0;border-left:4px solid #ef4444;border-radius:10px;
   padding:10px 14px;margin-bottom:8px;background:#fff}
+.t-detail{color:#64748b;font-size:.86rem;margin-top:4px}
 footer{text-align:center;color:#94a3b8;font-size:.8rem;margin-top:36px}
 
 @media (max-width:600px){.hero h1{font-size:2rem}.when{float:none;display:block}
