@@ -45,7 +45,7 @@ ul.timeline li::before{content:'';position:absolute;left:-28px;top:6px;width:10p
 .t-head{font-size:1rem}
 
 /* project grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .proj{border:1px solid #e2e8f0;border-radius:14px;padding:16px 18px;
   transition:transform .18s,box-shadow .18s;background:linear-gradient(180deg,#fff,#fafaff)}
 .proj:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(79,70,229,.14)}
@@ -70,4 +70,4 @@ ul.todos li{border:1px solid #e2e8f0;border-left:4px solid #ef4444;border-radius
 footer{text-align:center;color:#94a3b8;font-size:.8rem;margin-top:36px}
 
 @media (max-width:600px){.hero h1{font-size:2rem}.when{float:none;display:block}
-main{margin-top:-36px}.card{padding:20px 18px}}
+main{margin-top:-36px}.card{padding:20px 18px}.grid{grid-template-columns:1fr}}
