@@ -31,6 +31,8 @@ a{color:#4f46e5;text-decoration:none}a:hover{text-decoration:underline}
 .hero.compact h1 a{color:#fff}
 .hero.compact h1 a:hover{text-decoration:none;color:#c7d2fe}
 .empty{color:#94a3b8;margin:0}
+.bio{color:#475569;line-height:1.65;margin:0 0 10px}
+.bio:last-child{margin-bottom:0}
 
 /* ── content cards ── */
 main{max-width:860px;margin:-48px auto 0;padding:0 20px 40px;position:relative;z-index:2}
