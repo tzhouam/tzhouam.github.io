@@ -21,7 +21,16 @@ a{color:#4f46e5;text-decoration:none}a:hover{text-decoration:underline}
 .pill:hover{background:rgba(255,255,255,.25);text-decoration:none}
 .anchors{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
 .anchors a{color:#e0e7ff;font-weight:600;font-size:.92rem;text-transform:uppercase;
-  letter-spacing:.08em}
+  letter-spacing:.08em;padding-bottom:3px;border-bottom:2px solid transparent}
+.anchors a.active{color:#fff;border-bottom-color:#a5b4fc}
+.anchors a:hover{text-decoration:none;color:#fff}
+
+/* compact banner on section pages */
+.hero.compact{padding:26px 20px 52px}
+.hero.compact h1{font-size:1.5rem;margin:0 0 14px}
+.hero.compact h1 a{color:#fff}
+.hero.compact h1 a:hover{text-decoration:none;color:#c7d2fe}
+.empty{color:#94a3b8;margin:0}
 
 /* ── content cards ── */
 main{max-width:860px;margin:-48px auto 0;padding:0 20px 40px;position:relative;z-index:2}
