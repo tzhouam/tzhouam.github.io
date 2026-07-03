@@ -1,5 +1,5 @@
 (function () {
-  var DONE = 'agent-todos-done', PIN = 'agent-todos-pinned';
+  var DONE = 'agent-todos-done', PIN = 'agent-todos-pinned', OWNER = 'agent-owner';
   function load(k) { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
   function toggle(k, id) {
@@ -7,9 +7,21 @@
     if (i < 0) v.push(id); else v.splice(i, 1);
     save(k, v);
   }
+  // owner mode: visit any page with #owner once to enable in this browser
+  // (#guest disables). Guests never see the buttons and their stored marks
+  // are ignored, so everyone else always sees the canonical list.
+  function readHash() {
+    if (location.hash === '#owner') localStorage.setItem(OWNER, '1');
+    if (location.hash === '#guest') localStorage.removeItem(OWNER);
+  }
+  readHash();
+  window.addEventListener('hashchange', function () { readHash(); apply(); });
+  function isOwner() { return localStorage.getItem(OWNER) === '1'; }
 
   function apply() {
-    var done = load(DONE), pinned = load(PIN);
+    var owner = isOwner();
+    document.body.classList.toggle('owner', owner);
+    var done = owner ? load(DONE) : [], pinned = owner ? load(PIN) : [];
     // calendar chips of done todos disappear too
     document.querySelectorAll('.cal [data-tid]').forEach(function (el) {
       el.classList.toggle('done-chip', done.indexOf(el.dataset.tid) >= 0);
@@ -37,13 +49,14 @@
     });
     var bar = document.getElementById('todo-hidden-bar');
     if (bar) {
-      bar.style.display = hidden ? 'block' : 'none';
+      bar.style.display = owner && hidden ? 'block' : 'none';
       bar.querySelector('span').textContent =
         hidden + ' done todo' + (hidden === 1 ? '' : 's') + ' hidden';
     }
   }
 
   document.addEventListener('click', function (ev) {
+    if (!isOwner()) return;
     var btn = ev.target.closest ? ev.target.closest('button') : null;
     if (!btn) return;
     if (btn.id === 'todo-show-hidden') {
