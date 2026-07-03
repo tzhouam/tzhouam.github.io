@@ -66,7 +66,22 @@ table.cal{border-collapse:collapse;width:100%;margin-top:6px}
 ul.todos{list-style:none;padding:0;margin:0}
 ul.todos li{border:1px solid #e2e8f0;border-left:4px solid #ef4444;border-radius:10px;
   padding:10px 14px;margin-bottom:8px;background:#fff}
+ul.todos .when{float:none;display:inline}
 .t-detail{color:#64748b;font-size:.86rem;margin-top:4px}
+
+/* pin / done controls (state lives in this browser's localStorage) */
+.t-actions{float:right;display:flex;gap:6px;margin:-2px 0 4px 10px}
+.t-actions button,#todo-show-hidden{border:1px solid #e2e8f0;background:#f8fafc;
+  border-radius:8px;cursor:pointer;font:inherit;font-size:.78rem;padding:2px 10px;
+  color:#64748b;white-space:nowrap;transition:background .15s,color .15s}
+.t-actions button:hover,#todo-show-hidden:hover{background:#eef2ff;color:#4338ca}
+ul.todos li.pinned{border-left-color:#f59e0b;
+  background:linear-gradient(135deg,#fffbeb,#fff)}
+ul.todos li.pinned .b-pin{background:#fef3c7;border-color:#fcd34d;color:#92400e}
+ul.todos li.done-item{display:none}
+body.show-hidden ul.todos li.done-item{display:block;opacity:.55}
+.cal .todo.done-chip{display:none}
+#todo-hidden-bar{display:none;color:#94a3b8;font-size:.85rem;margin-top:10px}
 footer{text-align:center;color:#94a3b8;font-size:.8rem;margin-top:36px}
 
 @media (max-width:600px){.hero h1{font-size:2rem}.when{float:none;display:block}
