@@ -87,6 +87,8 @@ details.t-day summary{cursor:pointer;font-weight:600;color:#334155;font-size:.92
   user-select:none}
 details.t-day[open] summary{margin-bottom:6px}
 details.t-day summary .t-count{color:#64748b;font-weight:400}
+.t-stale{color:#b45309;background:#fef3c7;border-radius:6px;padding:1px 6px;
+  font-size:.72rem;font-weight:600}
 details.t-day.all-done{display:none}
 body.show-hidden details.t-day.all-done{display:block}
 ul.todos{list-style:none;padding:0;margin:0}
