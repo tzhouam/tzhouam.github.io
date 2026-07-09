@@ -97,9 +97,47 @@
     else return;
     apply();
   });
+  // ── encrypted private pages (todos/reading/routines) ──
+  // content ships as AES-GCM ciphertext; WebCrypto decrypts with the owner's
+  // password (PBKDF2-SHA256, 100k iterations — must match the Python side).
+  var PW = 'agent-site-pw';
+  function b64bytes(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+  function unlock(el, pw) {
+    var enc = new TextEncoder();
+    return crypto.subtle.importKey('raw', enc.encode(pw), 'PBKDF2', false, ['deriveKey'])
+      .then(function (mat) {
+        return crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: b64bytes(el.dataset.salt), iterations: 100000, hash: 'SHA-256' },
+          mat, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+      })
+      .then(function (key) {
+        return crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64bytes(el.dataset.iv) },
+                                     key, b64bytes(el.dataset.ct));
+      })
+      .then(function (pt) {
+        var host = document.createElement('div');
+        host.innerHTML = new TextDecoder().decode(pt);
+        el.replaceWith(host);
+        apply();  // wire pin/done/unrelated buttons on the decrypted content
+      });
+  }
+  function initLock() {
+    var el = document.querySelector('section.lock');
+    if (!el || !window.crypto || !crypto.subtle) return;
+    var saved = localStorage.getItem(PW);
+    if (saved) unlock(el, saved).catch(function () { localStorage.removeItem(PW); });
+    el.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var pw = el.querySelector('input').value;
+      unlock(el, pw).then(function () { localStorage.setItem(PW, pw); })
+        .catch(function () { el.querySelector('.lock-err').textContent = 'wrong password'; });
+    });
+  }
+
+  function boot() { apply(); initLock(); }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply);
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    apply();
+    boot();
   }
 })();

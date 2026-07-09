@@ -90,6 +90,12 @@ details.t-day[open] summary{margin-bottom:6px}
 details.t-day summary .t-count{color:#64748b;font-weight:400}
 .t-stale{color:#b45309;background:#fef3c7;border-radius:6px;padding:1px 6px;
   font-size:.72rem;font-weight:600}
+.lock-form{display:flex;gap:8px;margin-top:10px}
+.lock-form input{flex:0 1 220px;padding:8px 10px;border:1px solid #cbd5e1;
+  border-radius:8px;font:inherit}
+.lock-form button{padding:8px 14px;border:none;border-radius:8px;background:#4f46e5;
+  color:#fff;font-weight:600;cursor:pointer}
+.lock-err{color:#dc2626;font-size:.85rem;align-self:center}
 ul.routines{list-style:none;padding:0;margin:6px 0 0}
 ul.routines li{border:1px solid #e2e8f0;border-left:4px solid #6366f1;border-radius:10px;
   padding:10px 12px;margin-bottom:8px;background:#fff}
