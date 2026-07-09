@@ -1,5 +1,6 @@
 (function () {
   var DONE = 'agent-todos-done', PIN = 'agent-todos-pinned', OWNER = 'agent-owner';
+  var UNREL = 'agent-reading-unrelated';
   function load(k) { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } }
   function save(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
   function toggle(k, id) {
@@ -22,6 +23,7 @@
     var owner = isOwner();
     document.body.classList.toggle('owner', owner);
     var done = owner ? load(DONE) : [], pinned = owner ? load(PIN) : [];
+    var unrel = owner ? load(UNREL) : [];
     // calendar chips of done todos disappear too
     document.querySelectorAll('.cal [data-tid]').forEach(function (el) {
       el.classList.toggle('done-chip', done.indexOf(el.dataset.tid) >= 0);
@@ -42,12 +44,16 @@
       items.forEach(function (li) {
         var id = li.dataset.tid;
         var isDone = done.indexOf(id) >= 0, isPin = pinned.indexOf(id) >= 0;
-        if (isDone) hidden++; else allDone = false;
+        var isUnrel = unrel.indexOf(id) >= 0;
+        if (isDone || isUnrel) hidden++; else allDone = false;
         li.classList.toggle('done-item', isDone);
+        li.classList.toggle('unrel-item', isUnrel);
         li.classList.toggle('pinned', isPin);
         var pb = li.querySelector('.b-pin'), db = li.querySelector('.b-done');
+        var ub = li.querySelector('.b-unrel');
         if (pb) pb.textContent = isPin ? '\ud83d\udccc Unpin' : '\ud83d\udccc Pin';
         if (db) db.textContent = isDone ? '\u21a9 Restore' : '\u2713 Done';
+        if (ub) ub.textContent = isUnrel ? '\u21a9 Undo unrelated' : '\ud83d\udeab Unrelated';
       });
       // a day whose todos are all done disappears with them
       var group = list.closest ? list.closest('details.t-day') : null;
@@ -74,6 +80,20 @@
     if (!li) return;
     if (btn.classList.contains('b-pin')) toggle(PIN, li.dataset.tid);
     else if (btn.classList.contains('b-done')) toggle(DONE, li.dataset.tid);
+    else if (btn.classList.contains('b-unrel')) {
+      var id = li.dataset.tid;
+      var marking = load(UNREL).indexOf(id) < 0;
+      toggle(UNREL, id);
+      if (marking) {
+        // the static page can't reach the agent's store directly — hand the
+        // mark to the existing owner->agent mail channel, prefilled
+        var sec = li.closest('section');
+        var addr = sec && sec.dataset.agentMail;
+        if (addr) location.href = 'mailto:' + addr +
+          '?subject=' + encodeURIComponent('agent: reading unrelated ' + id) +
+          '&body=' + encodeURIComponent('Recorded from the website. Just hit send.');
+      }
+    }
     else return;
     apply();
   });

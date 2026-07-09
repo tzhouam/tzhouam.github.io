@@ -114,6 +114,9 @@ ul.todos li.pinned{border-left-color:#f59e0b;
 ul.todos li.pinned .b-pin{background:#fef3c7;border-color:#fcd34d;color:#92400e}
 ul.todos li.done-item{display:none}
 body.show-hidden ul.todos li.done-item{display:block;opacity:.55}
+ul.todos li.unrel-item{display:none}
+body.show-hidden ul.todos li.unrel-item{display:block;opacity:.4;border-left-color:#9ca3af}
+.b-unrel{color:#6b7280}
 .cal .todo.done-chip{display:none}
 #todo-hidden-bar{display:none;color:#94a3b8;font-size:.85rem;margin-top:10px}
 footer{text-align:center;color:#94a3b8;font-size:.8rem;margin-top:36px}
