@@ -81,6 +81,7 @@ table.cal{border-collapse:collapse;width:100%;margin-top:6px}
 .cal .more{color:#6366f1;font-size:.72rem;font-weight:600;margin-top:2px}
 .todo-scroll{max-height:480px;overflow-y:auto;padding-right:6px;margin-top:6px;
   scrollbar-width:thin;border-bottom:1px solid #e2e8f0}
+.todo-scroll.tall{max-height:78vh}  /* reading list holds far more items */
 details.t-day{margin:0 0 8px}
 details.t-day summary{cursor:pointer;font-weight:600;color:#334155;font-size:.92rem;
   padding:6px 8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;
