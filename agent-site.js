@@ -26,26 +26,32 @@
     document.querySelectorAll('.cal [data-tid]').forEach(function (el) {
       el.classList.toggle('done-chip', done.indexOf(el.dataset.tid) >= 0);
     });
-    var list = document.querySelector('ul.todos');
-    if (!list) return;
-    var items = Array.prototype.slice.call(list.querySelectorAll('li[data-tid]'));
-    // pinned first (keeping their relative order), the rest in rendered order
-    items.sort(function (a, b) {
-      var pa = pinned.indexOf(a.dataset.tid) >= 0 ? 0 : 1;
-      var pb = pinned.indexOf(b.dataset.tid) >= 0 ? 0 : 1;
-      return pa - pb || (+a.dataset.idx) - (+b.dataset.idx);
-    }).forEach(function (li) { list.appendChild(li); });
-
+    var lists = Array.prototype.slice.call(document.querySelectorAll('ul.todos'));
+    if (!lists.length) return;
     var hidden = 0;
-    items.forEach(function (li) {
-      var id = li.dataset.tid;
-      var isDone = done.indexOf(id) >= 0, isPin = pinned.indexOf(id) >= 0;
-      if (isDone) hidden++;
-      li.classList.toggle('done-item', isDone);
-      li.classList.toggle('pinned', isPin);
-      var pb = li.querySelector('.b-pin'), db = li.querySelector('.b-done');
-      if (pb) pb.textContent = isPin ? '\ud83d\udccc Unpin' : '\ud83d\udccc Pin';
-      if (db) db.textContent = isDone ? '\u21a9 Restore' : '\u2713 Done';
+    lists.forEach(function (list) {  // one ul per embedded day group
+      var items = Array.prototype.slice.call(list.querySelectorAll('li[data-tid]'));
+      // pinned first within their day (keeping relative order), rest as rendered
+      items.sort(function (a, b) {
+        var pa = pinned.indexOf(a.dataset.tid) >= 0 ? 0 : 1;
+        var pb = pinned.indexOf(b.dataset.tid) >= 0 ? 0 : 1;
+        return pa - pb || (+a.dataset.idx) - (+b.dataset.idx);
+      }).forEach(function (li) { list.appendChild(li); });
+
+      var allDone = items.length > 0;
+      items.forEach(function (li) {
+        var id = li.dataset.tid;
+        var isDone = done.indexOf(id) >= 0, isPin = pinned.indexOf(id) >= 0;
+        if (isDone) hidden++; else allDone = false;
+        li.classList.toggle('done-item', isDone);
+        li.classList.toggle('pinned', isPin);
+        var pb = li.querySelector('.b-pin'), db = li.querySelector('.b-done');
+        if (pb) pb.textContent = isPin ? '\ud83d\udccc Unpin' : '\ud83d\udccc Pin';
+        if (db) db.textContent = isDone ? '\u21a9 Restore' : '\u2713 Done';
+      });
+      // a day whose todos are all done disappears with them
+      var group = list.closest ? list.closest('details.t-day') : null;
+      if (group) group.classList.toggle('all-done', allDone);
     });
     var bar = document.getElementById('todo-hidden-bar');
     if (bar) {
