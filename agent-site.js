@@ -79,24 +79,47 @@
     var li = btn.closest('li[data-tid]');
     if (!li) return;
     if (btn.classList.contains('b-pin')) toggle(PIN, li.dataset.tid);
-    else if (btn.classList.contains('b-done')) toggle(DONE, li.dataset.tid);
+    else if (btn.classList.contains('b-done')) {
+      var marking = load(DONE).indexOf(li.dataset.tid) < 0;
+      toggle(DONE, li.dataset.tid);
+      if (marking) enqueueMark(li.dataset.tid, 'done');
+    }
     else if (btn.classList.contains('b-unrel')) {
-      var id = li.dataset.tid;
-      var marking = load(UNREL).indexOf(id) < 0;
-      toggle(UNREL, id);
-      if (marking) {
-        // the static page can't reach the agent's store directly — hand the
-        // mark to the existing owner->agent mail channel, prefilled
-        var sec = li.closest('section');
-        var addr = sec && sec.dataset.agentMail;
-        if (addr) location.href = 'mailto:' + addr +
-          '?subject=' + encodeURIComponent('agent: reading unrelated ' + id) +
-          '&body=' + encodeURIComponent('Recorded from the website. Just hit send.');
-      }
+      var unrelMarking = load(UNREL).indexOf(li.dataset.tid) < 0;
+      toggle(UNREL, li.dataset.tid);
+      if (unrelMarking) enqueueMark(li.dataset.tid, 'unrelated');
     }
     else return;
     apply();
   });
+
+  // ── marks sync: clicks act locally & instantly; the mark also queues and
+  // pushes to the private marks repo, where the agent collects it each run.
+  // The repo/token config lives INSIDE the encrypted page body (#marks-cfg),
+  // so only the unlocked page can sync; without it the queue just waits. ──
+  var MQ = 'agent-marks-queue';
+  var marksBusy = false;
+  function enqueueMark(id, action) {
+    var q = load(MQ);
+    q.push({ id: id, action: action, ts: new Date().toISOString() });
+    save(MQ, q);
+    flushMarks();
+  }
+  function flushMarks() {
+    var cfg = document.getElementById('marks-cfg');
+    var q = load(MQ);
+    if (!cfg || !cfg.dataset.repo || !cfg.dataset.token || !q.length || marksBusy) return;
+    marksBusy = true;
+    var name = 'marks/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.json';
+    fetch('https://api.github.com/repos/' + cfg.dataset.repo + '/contents/' + name, {
+      method: 'PUT',
+      headers: { Authorization: 'Bearer ' + cfg.dataset.token,
+                 Accept: 'application/vnd.github+json' },
+      body: JSON.stringify({ message: 'website marks',
+                             content: btoa(unescape(encodeURIComponent(JSON.stringify(q)))) }),
+    }).then(function (res) { if (res.ok) save(MQ, []); marksBusy = false; })
+      .catch(function () { marksBusy = false; /* offline — queue waits for the next visit */ });
+  }
   // ── encrypted private pages (todos/reading/routines) ──
   // content ships as AES-GCM ciphertext; WebCrypto decrypts with the owner's
   // password (PBKDF2-SHA256, 100k iterations — must match the Python side).
@@ -119,6 +142,7 @@
         host.innerHTML = new TextDecoder().decode(pt);
         el.replaceWith(host);
         apply();  // wire pin/done/unrelated buttons on the decrypted content
+        flushMarks();  // marks-cfg is inside the ciphertext — retry any queued marks now
       });
   }
   function initLock() {
